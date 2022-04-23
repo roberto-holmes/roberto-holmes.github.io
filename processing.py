@@ -11,13 +11,14 @@ for file in input_files:
 
         output_object = {}
         drivers = []
-
         for i, row in enumerate(reader):
             if i == 0:
                 output_object["track"] = row[0]
                 output_object["event"] = row[1]
                 output_object["duration"] = row[2]
                 output_object["date"] = row[3]
+                output_object["game"] = row[4]
+                output_object["series"] = row[5]
             elif i == 1:
                 output_object["fastest_lap"] = []
                 for element in row:

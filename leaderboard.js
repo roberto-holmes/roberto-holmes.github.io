@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 let header = document.getElementsByTagName("h1");
 let table = document.querySelector("table");
 const duration_multiplier = 1; // Points per hour
@@ -39,7 +30,7 @@ const races = [
     "./data\\20220403_road_america_indy.json",
     "./data\\20220416_indy500_indy.json",
 ];
-const table_head = ["Pos", "Δ", "Driver", "Points", "Races", "FLs", "DNFs"];
+const table_head = ["Pos", "Δ", "Driver", "Points"]; //, "Races", "FLs", "DNFs"];
 class Driver {
     constructor(name) {
         this.name = name;
@@ -90,9 +81,119 @@ class Driver {
     }
 }
 let drivers = [];
+let series = [];
+let allowed_series = [];
+let games = [];
+let allowed_games = [];
+let is_filtering_series = false;
+let is_filtering_game = false;
+let has_extracted_data = false;
+function selectAllRaces() {
+    allowed_games = [...games];
+    allowed_series = [...series];
+    let filter_container = document.getElementById("filters");
+    if (filter_container)
+        filter_container.innerHTML = "";
+    is_filtering_series = false;
+    is_filtering_game = false;
+    main();
+}
+// If the series is currently not allowed, add it. If it is allowed, remove it from the array
+function toggleAllowedSeries(s) {
+    const series_index = allowed_series.indexOf(s);
+    if (series_index === -1)
+        allowed_series.push(s);
+    else
+        allowed_series.splice(series_index, 1);
+    main();
+}
+function toggleAllowedGame(g) {
+    const game_index = allowed_games.indexOf(g);
+    if (game_index === -1)
+        allowed_games.push(g);
+    else
+        allowed_games.splice(game_index, 1);
+    main();
+}
+function filterBySeries() {
+    let filter_container = document.getElementById("filters");
+    if (filter_container === null)
+        return;
+    if (!is_filtering_series) {
+        is_filtering_game = false;
+        is_filtering_series = true;
+        // Get the element where the possible series will be displayed and clear it
+        filter_container.innerHTML = "";
+        // Add an option for each series
+        series.forEach((s) => {
+            let checked_text = "";
+            if (allowed_series.indexOf(s) !== -1)
+                checked_text = "checked";
+            if (filter_container === null)
+                return;
+            filter_container.innerHTML +=
+                '<div><input type="checkbox" id=' +
+                    s.replace(" ", "-") +
+                    ' onclick="toggleAllowedSeries(' +
+                    "'" +
+                    s +
+                    "'" +
+                    ')" ' +
+                    checked_text +
+                    "><label for=" +
+                    s.replace(" ", "-") +
+                    ">" +
+                    s +
+                    "</label></div>";
+        });
+    }
+    else {
+        filter_container.innerHTML = "";
+        is_filtering_series = false;
+    }
+}
+function filterByGame() {
+    let filter_container = document.getElementById("filters");
+    if (filter_container === null)
+        return;
+    if (!is_filtering_game) {
+        is_filtering_series = false;
+        is_filtering_game = true;
+        // Get the element where the possible series will be displayed and clear it
+        filter_container.innerHTML = "";
+        // Add an option for each series
+        games.forEach((g) => {
+            let checked_text = "";
+            if (allowed_games.indexOf(g) !== -1)
+                checked_text = "checked";
+            if (filter_container === null)
+                return;
+            filter_container.innerHTML +=
+                '<div><input type="checkbox" id=' +
+                    g.replace(" ", "-") +
+                    ' onclick="toggleAllowedGame(' +
+                    "'" +
+                    g +
+                    "'" +
+                    ')" ' +
+                    checked_text +
+                    "><label for=" +
+                    g.replace(" ", "-") +
+                    ">" +
+                    g +
+                    "</label></div>";
+        });
+    }
+    else {
+        filter_container.innerHTML = "";
+        is_filtering_game = false;
+    }
+}
 function generateTable() {
+    // Null check and clear table
     if (table === null)
         return;
+    table.innerHTML = "";
     // Create table header
     let thead = table.createTHead();
     let row = thead.insertRow();
@@ -107,15 +208,16 @@ function generateTable() {
         if (table === null)
             return;
         let row = table.insertRow();
-        const data = [
-            d.position.toString(),
-            d.delta_pos_str,
-            d.name,
-            d.points.toFixed(1),
-            d.participated_races.toString(),
-            d.fastest_lap_count.toString(),
-            d.DNF_count.toString(),
-        ];
+        row.classList.add("table-row");
+        row.onclick = function () {
+            console.log(d.name);
+        };
+        const data = [d.position.toString(), d.delta_pos_str, d.name, d.points.toFixed(1)];
+        // 	,
+        // 	d.participated_races.toString(),
+        // 	d.fastest_lap_count.toString(),
+        // 	d.DNF_count.toString(),
+        // ];
         for (let i = 0; i < data.length; i++) {
             let cell = row.insertCell();
             let text = document.createTextNode(data[i]);
@@ -125,20 +227,27 @@ function generateTable() {
         }
     });
 }
-function fetchJson(race) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let response = yield fetch(race);
-        let data = yield response.json();
-        return data;
-    });
+async function fetchJson(race) {
+    let response = await fetch(race);
+    let data = await response.json();
+    return data;
 }
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        // For each race
-        for (let i = 0; i < races.length; i++) {
-            const race = races[i];
-            // Extract data from json
-            let data = yield fetchJson(race);
+async function main(callback) {
+    let race_count = 0;
+    drivers = [];
+    // For each race
+    for (let i = 0; i < races.length; i++) {
+        const race = races[i];
+        // Extract data from json
+        let data = await fetchJson(race);
+        if (!has_extracted_data) {
+            if (games.indexOf(data.game) == -1)
+                games.push(data.game);
+            if (series.indexOf(data.series) == -1)
+                series.push(data.series);
+        }
+        if (allowed_games.length != 0 && allowed_series.length != 0 && allowed_games.includes(data.game) && allowed_series.includes(data.series)) {
+            // console.log("inside");
             // For each driver
             for (let j = 0; j < data.drivers.length; j++) {
                 const d = data.drivers[j];
@@ -171,8 +280,16 @@ function main() {
                     joint_pos_count++;
                 drivers[j].updatePosition(last_driver.pos);
             }
+            race_count++;
         }
-        generateTable();
-    });
+    }
+    has_extracted_data = true;
+    // Generate HTML
+    let race_count_display = document.getElementById("race-count-display");
+    if (race_count_display)
+        race_count_display.innerHTML = race_count + " total races";
+    generateTable();
+    if (callback)
+        callback();
 }
-main();
+main(selectAllRaces);

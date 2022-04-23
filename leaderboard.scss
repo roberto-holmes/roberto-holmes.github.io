@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&family=Roboto:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap");
+
+* {
+	font-family: "Roboto", Arial, Helvetica, sans-serif;
+}
+
+h1 {
+	text-align: center;
+}
+
+.selector-container {
+	padding: 2%;
+	display: flex;
+	justify-content: center;
+	gap: 3em;
+	div {
+		cursor: pointer;
+	}
+}
+
+#filters {
+	padding: 0 10vmax;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: center;
+	gap: 1em 3em;
+}
+
+#race-count-display {
+	padding: 1%;
+	text-align: center;
+}
+
+// ---------------------------- Table ----------------------------
+table {
+	margin: 0 auto;
+	text-align: center;
+	border-spacing: 0;
+}
+
+.table-row {
+	cursor: pointer;
+	&:hover {
+		background-color: #ccc;
+		opacity: 0.9;
+	}
+}
+
+td {
+	font-family: "Roboto Mono", "Courier New", Courier, monospace;
+	min-width: 3vw;
+}
+
+.pos-up {
+	color: green;
+}
+
+.pos-down {
+	color: red;
+}

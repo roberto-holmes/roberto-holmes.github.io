@@ -30,7 +30,7 @@ const races = [
 	"./data\\20220403_road_america_indy.json",
 	"./data\\20220416_indy500_indy.json",
 ];
-const table_head = ["Pos", "Δ", "Driver", "Points", "Races", "FLs", "DNFs"];
+const table_head = ["Pos", "Δ", "Driver", "Points"]; //, "Races", "FLs", "DNFs"];
 
 class Driver {
 	name: string;
@@ -91,9 +91,113 @@ class Driver {
 }
 
 let drivers: Driver[] = [];
+let series: string[] = [];
+let allowed_series: string[] = [];
+let games: string[] = [];
+let allowed_games: string[] = [];
+
+let is_filtering_series = false;
+let is_filtering_game = false;
+
+let has_extracted_data = false;
+
+function selectAllRaces() {
+	allowed_games = [...games];
+	allowed_series = [...series];
+	let filter_container = document.getElementById("filters");
+	if (filter_container) filter_container.innerHTML = "";
+	is_filtering_series = false;
+	is_filtering_game = false;
+	main();
+}
+
+// If the series is currently not allowed, add it. If it is allowed, remove it from the array
+function toggleAllowedSeries(s: string) {
+	const series_index = allowed_series.indexOf(s);
+	if (series_index === -1) allowed_series.push(s);
+	else allowed_series.splice(series_index, 1);
+	main();
+}
+
+function toggleAllowedGame(g: string) {
+	const game_index = allowed_games.indexOf(g);
+	if (game_index === -1) allowed_games.push(g);
+	else allowed_games.splice(game_index, 1);
+	main();
+}
+
+function filterBySeries() {
+	let filter_container = document.getElementById("filters");
+	if (filter_container === null) return;
+	if (!is_filtering_series) {
+		is_filtering_game = false;
+		is_filtering_series = true;
+		// Get the element where the possible series will be displayed and clear it
+		filter_container.innerHTML = "";
+		// Add an option for each series
+		series.forEach((s) => {
+			let checked_text = "";
+			if (allowed_series.indexOf(s) !== -1) checked_text = "checked";
+			if (filter_container === null) return;
+			filter_container.innerHTML +=
+				'<div><input type="checkbox" id=' +
+				s.replace(" ", "-") +
+				' onclick="toggleAllowedSeries(' +
+				"'" +
+				s +
+				"'" +
+				')" ' +
+				checked_text +
+				"><label for=" +
+				s.replace(" ", "-") +
+				">" +
+				s +
+				"</label></div>";
+		});
+	} else {
+		filter_container.innerHTML = "";
+		is_filtering_series = false;
+	}
+}
+
+function filterByGame() {
+	let filter_container = document.getElementById("filters");
+	if (filter_container === null) return;
+	if (!is_filtering_game) {
+		is_filtering_series = false;
+		is_filtering_game = true;
+		// Get the element where the possible series will be displayed and clear it
+		filter_container.innerHTML = "";
+		// Add an option for each series
+		games.forEach((g) => {
+			let checked_text = "";
+			if (allowed_games.indexOf(g) !== -1) checked_text = "checked";
+			if (filter_container === null) return;
+			filter_container.innerHTML +=
+				'<div><input type="checkbox" id=' +
+				g.replace(" ", "-") +
+				' onclick="toggleAllowedGame(' +
+				"'" +
+				g +
+				"'" +
+				')" ' +
+				checked_text +
+				"><label for=" +
+				g.replace(" ", "-") +
+				">" +
+				g +
+				"</label></div>";
+		});
+	} else {
+		filter_container.innerHTML = "";
+		is_filtering_game = false;
+	}
+}
 
 function generateTable() {
+	// Null check and clear table
 	if (table === null) return;
+	table.innerHTML = "";
 	// Create table header
 	let thead = table.createTHead();
 	let row = thead.insertRow();
@@ -108,15 +212,16 @@ function generateTable() {
 	drivers.forEach((d) => {
 		if (table === null) return;
 		let row = table.insertRow();
-		const data = [
-			d.position.toString(),
-			d.delta_pos_str,
-			d.name,
-			d.points.toFixed(1),
-			d.participated_races.toString(),
-			d.fastest_lap_count.toString(),
-			d.DNF_count.toString(),
-		];
+		row.classList.add("table-row");
+		row.onclick = function () {
+			console.log(d.name);
+		};
+		const data = [d.position.toString(), d.delta_pos_str, d.name, d.points.toFixed(1)];
+		// 	,
+		// 	d.participated_races.toString(),
+		// 	d.fastest_lap_count.toString(),
+		// 	d.DNF_count.toString(),
+		// ];
 		for (let i = 0; i < data.length; i++) {
 			let cell = row.insertCell();
 			let text = document.createTextNode(data[i]);
@@ -132,46 +237,62 @@ async function fetchJson(race: string) {
 	return data;
 }
 
-async function main() {
+async function main(callback?: () => void) {
+	let race_count = 0;
+	drivers = [];
 	// For each race
 	for (let i = 0; i < races.length; i++) {
 		const race = races[i];
 		// Extract data from json
 		let data = await fetchJson(race);
 
-		// For each driver
-		for (let j = 0; j < data.drivers.length; j++) {
-			const d = data.drivers[j];
-
-			let driver_index = drivers.findIndex((stored_driver) => stored_driver.name === d.name);
-			// Check if driver already has an entry
-			if (driver_index === -1) {
-				driver_index = drivers.push(new Driver(d.name)) - 1;
-			}
-			// Check for DNF
-			if (d.pos === "DNF") drivers[driver_index].addDNF();
-			else drivers[driver_index].addResult(d.pos, data.duration);
-
-			if (data.fastest_lap.includes(d.name)) drivers[driver_index].addFastestLap(data.duration);
+		if (!has_extracted_data) {
+			if (games.indexOf(data.game) == -1) games.push(data.game);
+			if (series.indexOf(data.series) == -1) series.push(data.series);
 		}
-		drivers.sort((a, b) => {
-			return b.points - a.points;
-		});
 
-		let last_driver = { pos: 0, points: 0 };
-		let joint_pos_count = 1;
+		if (allowed_games.length != 0 && allowed_series.length != 0 && allowed_games.includes(data.game) && allowed_series.includes(data.series)) {
+			// console.log("inside");
+			// For each driver
+			for (let j = 0; j < data.drivers.length; j++) {
+				const d = data.drivers[j];
 
-		// Calculate leaderboard position for each driver
-		for (let j = 0; j < drivers.length; j++) {
-			if (drivers[j].points !== last_driver.points) {
-				last_driver.pos += joint_pos_count;
-				last_driver.points = drivers[j].points;
-				joint_pos_count = 1;
-			} else joint_pos_count++;
-			drivers[j].updatePosition(last_driver.pos);
+				let driver_index = drivers.findIndex((stored_driver) => stored_driver.name === d.name);
+				// Check if driver already has an entry
+				if (driver_index === -1) {
+					driver_index = drivers.push(new Driver(d.name)) - 1;
+				}
+				// Check for DNF
+				if (d.pos === "DNF") drivers[driver_index].addDNF();
+				else drivers[driver_index].addResult(d.pos, data.duration);
+
+				if (data.fastest_lap.includes(d.name)) drivers[driver_index].addFastestLap(data.duration);
+			}
+			drivers.sort((a, b) => {
+				return b.points - a.points;
+			});
+
+			let last_driver = { pos: 0, points: 0 };
+			let joint_pos_count = 1;
+
+			// Calculate leaderboard position for each driver
+			for (let j = 0; j < drivers.length; j++) {
+				if (drivers[j].points !== last_driver.points) {
+					last_driver.pos += joint_pos_count;
+					last_driver.points = drivers[j].points;
+					joint_pos_count = 1;
+				} else joint_pos_count++;
+				drivers[j].updatePosition(last_driver.pos);
+			}
+			race_count++;
 		}
 	}
-	generateTable();
-}
+	has_extracted_data = true;
 
-main();
+	// Generate HTML
+	let race_count_display = document.getElementById("race-count-display");
+	if (race_count_display) race_count_display.innerHTML = race_count + " total races";
+	generateTable();
+	if (callback) callback();
+}
+main(selectAllRaces);
