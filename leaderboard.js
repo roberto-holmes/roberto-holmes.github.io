@@ -98,6 +98,30 @@ function selectAllRaces() {
     is_filtering_game = false;
     main();
 }
+function selectNoSeries() {
+    console.log("no series");
+    allowed_series = [];
+    // Clear checkboxes
+    series.forEach((s) => {
+        console.log("Looking for " + s.replaceAll(" ", "-"));
+        let checkbox = document.getElementById(s.replaceAll(" ", "-"));
+        console.log(checkbox);
+        checkbox.checked = false;
+    });
+    main();
+}
+function selectNoGames() {
+    console.log("no games");
+    allowed_games = [];
+    // Clear checkboxes
+    games.forEach((g) => {
+        console.log("Looking for " + g.replaceAll(" ", "-"));
+        let checkbox = document.getElementById(g.replaceAll(" ", "-"));
+        console.log(checkbox);
+        checkbox.checked = false;
+    });
+    main();
+}
 // If the series is currently not allowed, add it. If it is allowed, remove it from the array
 function toggleAllowedSeries(s) {
     const series_index = allowed_series.indexOf(s);
@@ -108,11 +132,13 @@ function toggleAllowedSeries(s) {
     main();
 }
 function toggleAllowedGame(g) {
+    // console.log(allowed_games);
     const game_index = allowed_games.indexOf(g);
     if (game_index === -1)
         allowed_games.push(g);
     else
         allowed_games.splice(game_index, 1);
+    // console.log(allowed_games);
     main();
 }
 function filterBySeries() {
@@ -124,6 +150,8 @@ function filterBySeries() {
         is_filtering_series = true;
         // Get the element where the possible series will be displayed and clear it
         filter_container.innerHTML = "";
+        // Add an option to clear selection
+        filter_container.innerHTML += '<div onclick="selectNoSeries()">Clear Selection</div>';
         // Add an option for each series
         series.forEach((s) => {
             let checked_text = "";
@@ -133,7 +161,7 @@ function filterBySeries() {
                 return;
             filter_container.innerHTML +=
                 '<div><input type="checkbox" id=' +
-                    s.replace(" ", "-") +
+                    s.replaceAll(" ", "-") +
                     ' onclick="toggleAllowedSeries(' +
                     "'" +
                     s +
@@ -141,7 +169,7 @@ function filterBySeries() {
                     ')" ' +
                     checked_text +
                     "><label for=" +
-                    s.replace(" ", "-") +
+                    s.replaceAll(" ", "-") +
                     ">" +
                     s +
                     "</label></div>";
@@ -161,6 +189,8 @@ function filterByGame() {
         is_filtering_game = true;
         // Get the element where the possible series will be displayed and clear it
         filter_container.innerHTML = "";
+        // Add an option to clear selection
+        filter_container.innerHTML += '<div onclick="selectNoGames()">Clear Selection</div>';
         // Add an option for each series
         games.forEach((g) => {
             let checked_text = "";
@@ -170,7 +200,7 @@ function filterByGame() {
                 return;
             filter_container.innerHTML +=
                 '<div><input type="checkbox" id=' +
-                    g.replace(" ", "-") +
+                    g.replaceAll(" ", "-") +
                     ' onclick="toggleAllowedGame(' +
                     "'" +
                     g +
@@ -178,7 +208,7 @@ function filterByGame() {
                     ')" ' +
                     checked_text +
                     "><label for=" +
-                    g.replace(" ", "-") +
+                    g.replaceAll(" ", "-") +
                     ">" +
                     g +
                     "</label></div>";
