@@ -1,1 +1,32 @@
-{"track": "Autodromo Nazionale di Monza", "event": "GT3/GT4 Monza", "duration": ".5", "date": "20210213", "game": "ACC", "series": "ACC Season 1", "fastest_lap": ["qui gonn JEB"], "drivers": [{"name": "Jack Mekov", "pos": "1"}, {"name": "qui gonn JEB", "pos": "2"}, {"name": "Fried04", "pos": "3"}, {"name": "RTMolov", "pos": "4"}, {"name": "LilTimmy", "pos": "5"}, {"name": "Evan", "pos": "6"}, {"name": "CraigMeUp", "pos": "7"}, {"name": "Mat_Tea", "pos": "8"}, {"name": "Proton", "pos": "9"}, {"name": "Jetyh", "pos": "10"}, {"name": "KeBjg", "pos": "11"}, {"name": "Bluefoxcat", "pos": "12"}, {"name": "DigbyTW [ZF]", "pos": "13"}, {"name": "Dennus079", "pos": "14"}, {"name": "Ken-Ohki", "pos": "15"}, {"name": "LordFlipFlap", "pos": "16"}, {"name": "jarrebear", "pos": "17"}, {"name": "JOML", "pos": "18"}, {"name": "Reiman", "pos": "29"}, {"name": "teepap", "pos": "20"}, {"name": "Taylor", "pos": "DNF"}]}
+{
+	"track": "Autodromo Nazionale di Monza",
+	"event": "GT3/GT4 Monza",
+	"duration": ".5",
+	"date": "20210213",
+	"game": "ACC",
+	"series": "ACC Season 1",
+	"fastest_lap": ["qui gonn JEB"],
+	"drivers": [
+		{ "name": "Jack Mekov", "pos": "1" },
+		{ "name": "qui gonn JEB", "pos": "2" },
+		{ "name": "Fried04", "pos": "3" },
+		{ "name": "RTMolov", "pos": "4" },
+		{ "name": "LilTimmy", "pos": "5" },
+		{ "name": "Evan", "pos": "6" },
+		{ "name": "CraigMeUp", "pos": "7" },
+		{ "name": "Mat_Tea", "pos": "8" },
+		{ "name": "Proton", "pos": "9" },
+		{ "name": "Jetyh", "pos": "10" },
+		{ "name": "KeBjg", "pos": "11" },
+		{ "name": "Bluefoxcat", "pos": "12" },
+		{ "name": "Digby TW [ZF]", "pos": "13" },
+		{ "name": "Dennus079", "pos": "14" },
+		{ "name": "Ken-Ohki", "pos": "15" },
+		{ "name": "LordFlipFlap", "pos": "16" },
+		{ "name": "jarrebear", "pos": "17" },
+		{ "name": "JOML", "pos": "18" },
+		{ "name": "Reiman", "pos": "29" },
+		{ "name": "teepap", "pos": "20" },
+		{ "name": "Taylor", "pos": "DNF" }
+	]
+}

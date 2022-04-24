@@ -1,1 +1,27 @@
-{"track": "Circuit de Spa-Francorchamps", "event": "Belgian GP", "duration": "1.5", "date": "20201017", "game": "F1 2020", "series": "F1 League Season 1", "fastest_lap": ["Rust"], "drivers": [{"name": "Rust", "pos": "1"}, {"name": "theepicpye", "pos": "2"}, {"name": "Jetyh", "pos": "3"}, {"name": "Delirious_Walrus", "pos": "4"}, {"name": "Fried04", "pos": "5"}, {"name": "Reiman", "pos": "6"}, {"name": "Termin", "pos": "7"}, {"name": "Daktyte", "pos": "8"}, {"name": "Proton", "pos": "9"}, {"name": "Charisarian", "pos": "10"}, {"name": "Electronics", "pos": "11"}, {"name": "AwkwardPenguin", "pos": "DNF"}, {"name": "Crashneck", "pos": "DNF"}, {"name": "Hayashi", "pos": "DNF"}, {"name": "The Vonx", "pos": "DNF"}, {"name": "Flying Turtle", "pos": "DNF"}]}
+{
+	"track": "Circuit de Spa-Francorchamps",
+	"event": "Belgian GP",
+	"duration": "1.5",
+	"date": "20201017",
+	"game": "F1 2020",
+	"series": "F1 League Season 1",
+	"fastest_lap": ["Rust"],
+	"drivers": [
+		{ "name": "Rust", "pos": "1" },
+		{ "name": "theepicpye", "pos": "2" },
+		{ "name": "Jetyh", "pos": "3" },
+		{ "name": "Delirious Walrus", "pos": "4" },
+		{ "name": "Fried04", "pos": "5" },
+		{ "name": "Reiman", "pos": "6" },
+		{ "name": "Termin", "pos": "7" },
+		{ "name": "Daktyte", "pos": "8" },
+		{ "name": "Proton", "pos": "9" },
+		{ "name": "Charisarian", "pos": "10" },
+		{ "name": "Electronics", "pos": "11" },
+		{ "name": "AwkwardPenguin", "pos": "DNF" },
+		{ "name": "Crashneck", "pos": "DNF" },
+		{ "name": "Hayashi", "pos": "DNF" },
+		{ "name": "The Vonx", "pos": "DNF" },
+		{ "name": "Flying Turtle", "pos": "DNF" }
+	]
+}

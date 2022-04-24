@@ -1,1 +1,30 @@
-{"track": "COTA", "event": "USA GP", "duration": "1.5", "date": "20210612", "game": "F1 2020", "series": "F1 League Season 2", "fastest_lap": ["Rust"], "drivers": [{"name": "Rust", "pos": "1"}, {"name": "Neusor", "pos": "2"}, {"name": "qui gonn JEB", "pos": "3"}, {"name": "The Vonx", "pos": "4"}, {"name": "TheEpicPye", "pos": "5"}, {"name": "Dennus079", "pos": "6"}, {"name": "DeliriousWalrus", "pos": "7"}, {"name": "Jetyh", "pos": "8"}, {"name": "Macc", "pos": "9"}, {"name": "Fried04", "pos": "10"}, {"name": "Keelbaru", "pos": "11"}, {"name": "AwkwardPenguin", "pos": "12"}, {"name": "MarkusRHansen", "pos": "13"}, {"name": "Electronics", "pos": "14"}, {"name": "Woody", "pos": "15"}, {"name": "DODGE26", "pos": "16"}, {"name": "Bastian", "pos": "17"}, {"name": "Eathan", "pos": "18"}, {"name": "Dommi17", "pos": "19"}]}
+{
+	"track": "COTA",
+	"event": "USA GP",
+	"duration": "1.5",
+	"date": "20210612",
+	"game": "F1 2020",
+	"series": "F1 League Season 2",
+	"fastest_lap": ["Rust"],
+	"drivers": [
+		{ "name": "Rust", "pos": "1" },
+		{ "name": "Neusor", "pos": "2" },
+		{ "name": "qui gonn JEB", "pos": "3" },
+		{ "name": "The Vonx", "pos": "4" },
+		{ "name": "TheEpicPye", "pos": "5" },
+		{ "name": "Dennus079", "pos": "6" },
+		{ "name": "Delirious Walrus", "pos": "7" },
+		{ "name": "Jetyh", "pos": "8" },
+		{ "name": "Macc", "pos": "9" },
+		{ "name": "Fried04", "pos": "10" },
+		{ "name": "Keelbaru", "pos": "11" },
+		{ "name": "AwkwardPenguin", "pos": "12" },
+		{ "name": "Markus R Hansen", "pos": "13" },
+		{ "name": "Electronics", "pos": "14" },
+		{ "name": "Woody", "pos": "15" },
+		{ "name": "DODGE26", "pos": "16" },
+		{ "name": "Bastian", "pos": "17" },
+		{ "name": "Eathan", "pos": "18" },
+		{ "name": "Dommi17", "pos": "19" }
+	]
+}

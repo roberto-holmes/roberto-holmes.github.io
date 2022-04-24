@@ -1,1 +1,20 @@
-{"track": "Autodromo Nazionale di Monza", "event": "GT3/GT4 Monza", "duration": "1", "date": "20210213", "game": "ACC", "series": "ACC Season 1", "fastest_lap": ["Neusor"], "drivers": [{"name": "Pjotr Dominicus", "pos": "1"}, {"name": "DealerBen", "pos": "2"}, {"name": "Crashneck", "pos": "3"}, {"name": "AwkwardPenguin", "pos": "4"}, {"name": "TheOnlyTermin", "pos": "5"}, {"name": "QBDLettuce", "pos": "6"}, {"name": "Luke", "pos": "7"}, {"name": "roterx2", "pos": "8"}, {"name": "nicke", "pos": "9"}]}
+{
+	"track": "Autodromo Nazionale di Monza",
+	"event": "GT3/GT4 Monza",
+	"duration": "1",
+	"date": "20210213",
+	"game": "ACC",
+	"series": "ACC Season 1",
+	"fastest_lap": ["Neusor"],
+	"drivers": [
+		{ "name": "Neusor", "pos": "1" },
+		{ "name": "DealerBen", "pos": "2" },
+		{ "name": "Crashneck", "pos": "3" },
+		{ "name": "AwkwardPenguin", "pos": "4" },
+		{ "name": "Termin", "pos": "5" },
+		{ "name": "QBDLettuce", "pos": "6" },
+		{ "name": "Luke", "pos": "7" },
+		{ "name": "roterx2", "pos": "8" },
+		{ "name": "nicke", "pos": "9" }
+	]
+}

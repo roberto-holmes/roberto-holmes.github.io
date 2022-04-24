@@ -103,11 +103,11 @@ const races = [
 	"./data\\20220423_1_hungary_gt3.json",
 	"./data\\20220423_2_hungary_gt3.json",
 ];
-const table_head = ["Pos", "Δ", "Driver", "Points"]; //, "Races", "FLs", "DNFs"];
 
 class Driver {
 	name: string;
 	points: number;
+	points_per_hour: number;
 	fastest_lap_count: number;
 	DNF_count: number;
 	participated_races: number;
@@ -120,6 +120,7 @@ class Driver {
 	constructor(name: string) {
 		this.name = name;
 		this.points = 0;
+		this.points_per_hour = 0;
 		this.fastest_lap_count = 0;
 		this.DNF_count = 0;
 		this.participated_races = 0;
@@ -134,7 +135,8 @@ class Driver {
 		if (pos <= point_system.length) this.points += point_system[pos - 1] * duration * duration_multiplier;
 		else this.points += 1 * duration * duration_multiplier;
 
-		this.time_driven += duration;
+		this.time_driven += Number(duration);
+		this.points_per_hour = this.points / this.time_driven;
 		this.participated_races++;
 	}
 	addDNF() {
@@ -143,7 +145,7 @@ class Driver {
 	}
 	addFastestLap(duration: number) {
 		this.fastest_lap_count++;
-		// this.points += points_FL * duration * duration_multiplier;
+		this.points += points_FL * duration * duration_multiplier;
 	}
 	updatePosition(pos: number) {
 		if (this.position !== 0) {
@@ -171,6 +173,8 @@ let series: string[] = [];
 let allowed_series: string[] = [];
 let games: string[] = [];
 let allowed_games: string[] = [];
+
+let showTotalPoints = true;
 
 let is_filtering_series = false;
 let is_filtering_game = false;
@@ -296,11 +300,25 @@ function filterByGame() {
 	}
 }
 
+function totalPoints() {
+	showTotalPoints = true;
+	main();
+}
+
+function pointsPerHour() {
+	showTotalPoints = false;
+	main();
+}
+
 function generateTable() {
 	// Null check and clear table
 	if (table === null) return;
 	table.innerHTML = "";
 	// Create table header
+	let table_head: string[] = [];
+	if (showTotalPoints) table_head = ["Pos", "Δ", "Driver", "Points"];
+	else table_head = ["Pos", "Δ", "Driver", "Points/h"];
+
 	let thead = table.createTHead();
 	let row = thead.insertRow();
 	for (let title of table_head) {
@@ -318,12 +336,11 @@ function generateTable() {
 		row.onclick = function () {
 			console.log(d.name + " has " + d.points + " points");
 		};
-		const data = [d.position.toString(), d.delta_pos_str, d.name, d.points.toFixed(1)];
-		// 	,
-		// 	d.participated_races.toString(),
-		// 	d.fastest_lap_count.toString(),
-		// 	d.DNF_count.toString(),
-		// ];
+
+		let data: string[] = [];
+		if (showTotalPoints) data = [d.position.toString(), d.delta_pos_str, d.name, d.points.toFixed(1)];
+		else data = [d.position.toString(), d.delta_pos_str, d.name, d.points_per_hour.toFixed(2)];
+
 		for (let i = 0; i < data.length; i++) {
 			let cell = row.insertCell();
 			let text = document.createTextNode(data[i]);
@@ -371,7 +388,8 @@ async function main(callback?: () => void) {
 				if (data.fastest_lap.includes(d.name)) drivers[driver_index].addFastestLap(data.duration);
 			}
 			drivers.sort((a, b) => {
-				return b.points - a.points;
+				if (showTotalPoints) return b.points - a.points;
+				else return b.points_per_hour - a.points_per_hour;
 			});
 
 			let last_driver = { pos: 0, points: 0 };

@@ -1,1 +1,30 @@
-{"track": "Red Bull Ring", "event": "Austrian GP", "duration": "1.5", "date": "20201128", "game": "F1 2020", "series": "F1 League Season 1", "fastest_lap": ["Rust"], "drivers": [{"name": "Liin", "pos": "1"}, {"name": "Rust", "pos": "2"}, {"name": "Hayashi", "pos": "3"}, {"name": "The Vonx", "pos": "4"}, {"name": "theepicpye", "pos": "5"}, {"name": "Pingerz", "pos": "6"}, {"name": "Fried04", "pos": "7"}, {"name": "AwkwardPenguin", "pos": "8"}, {"name": "Delirious_Walrus", "pos": "9"}, {"name": "Reiman", "pos": "10"}, {"name": "Termin", "pos": "11"}, {"name": "Bastian", "pos": "12"}, {"name": "Jetyh", "pos": "13"}, {"name": "Crashneck", "pos": "14"}, {"name": "Charisarian", "pos": "15"}, {"name": "Proton", "pos": "16"}, {"name": "Daktyte", "pos": "17"}, {"name": "LordFlipFlap", "pos": "18"}, {"name": "Electronics", "pos": "19"}]}
+{
+	"track": "Red Bull Ring",
+	"event": "Austrian GP",
+	"duration": "1.5",
+	"date": "20201128",
+	"game": "F1 2020",
+	"series": "F1 League Season 1",
+	"fastest_lap": ["Rust"],
+	"drivers": [
+		{ "name": "Liin", "pos": "1" },
+		{ "name": "Rust", "pos": "2" },
+		{ "name": "Hayashi", "pos": "3" },
+		{ "name": "The Vonx", "pos": "4" },
+		{ "name": "theepicpye", "pos": "5" },
+		{ "name": "Pingerz", "pos": "6" },
+		{ "name": "Fried04", "pos": "7" },
+		{ "name": "AwkwardPenguin", "pos": "8" },
+		{ "name": "Delirious Walrus", "pos": "9" },
+		{ "name": "Reiman", "pos": "10" },
+		{ "name": "Termin", "pos": "11" },
+		{ "name": "Bastian", "pos": "12" },
+		{ "name": "Jetyh", "pos": "13" },
+		{ "name": "Crashneck", "pos": "14" },
+		{ "name": "Charisarian", "pos": "15" },
+		{ "name": "Proton", "pos": "16" },
+		{ "name": "Daktyte", "pos": "17" },
+		{ "name": "LordFlipFlap", "pos": "18" },
+		{ "name": "Electronics", "pos": "19" }
+	]
+}

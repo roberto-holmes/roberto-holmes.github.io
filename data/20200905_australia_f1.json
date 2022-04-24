@@ -1,1 +1,28 @@
-{"track": "Albert Park Circuit", "event": "Australian GP", "duration": "1.5", "date": "20200905", "game": "F1 2020", "series": "F1 League Season 1", "fastest_lap": ["Husky"], "drivers": [{"name": "Husky", "pos": "1"}, {"name": "Liin", "pos": "2"}, {"name": "The Vonx", "pos": "3"}, {"name": "theepicpye", "pos": "4"}, {"name": "Hayashi", "pos": "5"}, {"name": "Delirious_Walrus", "pos": "6"}, {"name": "AwkwardPenguin", "pos": "7"}, {"name": "Crashneck", "pos": "8"}, {"name": "Termin", "pos": "9"}, {"name": "Proton", "pos": "10"}, {"name": "Jetyh", "pos": "11"}, {"name": "IamJames", "pos": "12"}, {"name": "Charisarian", "pos": "13"}, {"name": "Daktyte", "pos": "DNF"}, {"name": "Electronics", "pos": "DNF"}, {"name": "Dennus079", "pos": "DNF"}, {"name": "Flying Turtle", "pos": "DNF"}]}
+{
+	"track": "Albert Park Circuit",
+	"event": "Australian GP",
+	"duration": "1.5",
+	"date": "20200905",
+	"game": "F1 2020",
+	"series": "F1 League Season 1",
+	"fastest_lap": ["Husky"],
+	"drivers": [
+		{ "name": "Husky", "pos": "1" },
+		{ "name": "Liin", "pos": "2" },
+		{ "name": "The Vonx", "pos": "3" },
+		{ "name": "theepicpye", "pos": "4" },
+		{ "name": "Hayashi", "pos": "5" },
+		{ "name": "Delirious Walrus", "pos": "6" },
+		{ "name": "AwkwardPenguin", "pos": "7" },
+		{ "name": "Crashneck", "pos": "8" },
+		{ "name": "Termin", "pos": "9" },
+		{ "name": "Proton", "pos": "10" },
+		{ "name": "Jetyh", "pos": "11" },
+		{ "name": "IamJames", "pos": "12" },
+		{ "name": "Charisarian", "pos": "13" },
+		{ "name": "Daktyte", "pos": "DNF" },
+		{ "name": "Electronics", "pos": "DNF" },
+		{ "name": "Dennus079", "pos": "DNF" },
+		{ "name": "Flying Turtle", "pos": "DNF" }
+	]
+}

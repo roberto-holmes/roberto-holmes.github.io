@@ -1,1 +1,28 @@
-{"track": "Silverstone GP", "event": "GT3/GT4 Silverstone", "duration": ".5", "date": "20201211", "game": "ACC", "series": "ACC Season 1", "fastest_lap": ["Jack Mekov"], "drivers": [{"name": "Jack Mekov", "pos": "1"}, {"name": "Neusor", "pos": "2"}, {"name": "Husky", "pos": "3"}, {"name": "Bomster", "pos": "4"}, {"name": "Bluefoxcat", "pos": "5"}, {"name": "Proton29", "pos": "6"}, {"name": "Fried04", "pos": "7"}, {"name": "LilTimmy", "pos": "8"}, {"name": "RTMolov", "pos": "9"}, {"name": "Mat_Tea", "pos": "10"}, {"name": "CraigMeUp", "pos": "11"}, {"name": "TPAP", "pos": "12"}, {"name": "Khargi McJin", "pos": "13"}, {"name": "KeBjg", "pos": "14"}, {"name": "Ken-Ohki", "pos": "15"}, {"name": "LordFlipFlap", "pos": "16"}, {"name": "Crashneck", "pos": "17"}]}
+{
+	"track": "Silverstone GP",
+	"event": "GT3/GT4 Silverstone",
+	"duration": ".5",
+	"date": "20201211",
+	"game": "ACC",
+	"series": "ACC Season 1",
+	"fastest_lap": ["Jack Mekov"],
+	"drivers": [
+		{ "name": "Jack Mekov", "pos": "1" },
+		{ "name": "Neusor", "pos": "2" },
+		{ "name": "Husky", "pos": "3" },
+		{ "name": "Bomster", "pos": "4" },
+		{ "name": "Bluefoxcat", "pos": "5" },
+		{ "name": "Proton29", "pos": "6" },
+		{ "name": "Fried04", "pos": "7" },
+		{ "name": "LilTimmy", "pos": "8" },
+		{ "name": "RTMolov", "pos": "9" },
+		{ "name": "Mat_Tea", "pos": "10" },
+		{ "name": "CraigMeUp", "pos": "11" },
+		{ "name": "teepap", "pos": "12" },
+		{ "name": "Khargi McJin", "pos": "13" },
+		{ "name": "KeBjg", "pos": "14" },
+		{ "name": "Ken-Ohki", "pos": "15" },
+		{ "name": "LordFlipFlap", "pos": "16" },
+		{ "name": "Crashneck", "pos": "17" }
+	]
+}

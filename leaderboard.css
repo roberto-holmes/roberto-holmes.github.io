@@ -19,12 +19,15 @@ h1 {
 }
 
 #filters {
-  padding: 0 10vmax;
+  padding: 0 10vmin;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-content: center;
   gap: 1em 3em;
+}
+#filters div {
+  width: 16em;
 }
 
 #race-count-display {
