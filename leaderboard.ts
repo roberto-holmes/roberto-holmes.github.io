@@ -174,7 +174,7 @@ let allowed_series: string[] = [];
 let games: string[] = [];
 let allowed_games: string[] = [];
 
-let showTotalPoints = true;
+let table_sorting_criterion = "total";
 
 let is_filtering_series = false;
 let is_filtering_game = false;
@@ -301,12 +301,17 @@ function filterByGame() {
 }
 
 function totalPoints() {
-	showTotalPoints = true;
+	table_sorting_criterion = "total";
 	main();
 }
 
 function pointsPerHour() {
-	showTotalPoints = false;
+	table_sorting_criterion = "pph";
+	main();
+}
+
+function raceCount() {
+	table_sorting_criterion = "race count";
 	main();
 }
 
@@ -316,8 +321,10 @@ function generateTable() {
 	table.innerHTML = "";
 	// Create table header
 	let table_head: string[] = [];
-	if (showTotalPoints) table_head = ["Pos", "Δ", "Driver", "Points"];
-	else table_head = ["Pos", "Δ", "Driver", "Points/h"];
+	if (table_sorting_criterion === "total") table_head = ["Pos", "Δ", "Driver", "Points"];
+	else if (table_sorting_criterion === "pph") table_head = ["Pos", "Δ", "Driver", "Points", "Points/h", "Races"];
+	else if (table_sorting_criterion === "race count") table_head = ["Pos", "Δ", "Driver", "Points", "Points/h", "Races"];
+	else throw "Invalid sorting criterion";
 
 	let thead = table.createTHead();
 	let row = thead.insertRow();
@@ -338,8 +345,12 @@ function generateTable() {
 		};
 
 		let data: string[] = [];
-		if (showTotalPoints) data = [d.position.toString(), d.delta_pos_str, d.name, d.points.toFixed(1)];
-		else data = [d.position.toString(), d.delta_pos_str, d.name, d.points_per_hour.toFixed(2)];
+		if (table_sorting_criterion === "total") data = [d.position.toString(), d.delta_pos_str, d.name, d.points.toFixed(1)];
+		else if (table_sorting_criterion === "pph")
+			data = [d.position.toString(), d.delta_pos_str, d.name, d.points.toFixed(1), d.points_per_hour.toFixed(2), d.participated_races.toString()];
+		else if (table_sorting_criterion === "race count")
+			data = [d.position.toString(), d.delta_pos_str, d.name, d.points.toFixed(1), d.points_per_hour.toFixed(2), d.participated_races.toString()];
+		else throw "Invalid sorting criterion";
 
 		for (let i = 0; i < data.length; i++) {
 			let cell = row.insertCell();
@@ -388,8 +399,10 @@ async function main(callback?: () => void) {
 				if (data.fastest_lap.includes(d.name)) drivers[driver_index].addFastestLap(data.duration);
 			}
 			drivers.sort((a, b) => {
-				if (showTotalPoints) return b.points - a.points;
-				else return b.points_per_hour - a.points_per_hour;
+				if (table_sorting_criterion === "total") return b.points - a.points;
+				else if (table_sorting_criterion === "pph") return b.points_per_hour - a.points_per_hour;
+				else if (table_sorting_criterion === "race count") return b.participated_races - a.participated_races;
+				else throw "Invalid sorting criterion";
 			});
 
 			let last_driver = { pos: 0, points: 0 };

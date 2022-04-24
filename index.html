@@ -11,14 +11,17 @@
 <body>
 	<h1>The Unofficial Croggle Motorsports Grand Leaderboard</h1>
 	<div class="selector-container">
-		<div onclick="selectAllRaces()">Select All Races</div>
-		<div onclick="filterBySeries()">Filter by Series</div>
-		<div onclick="filterByGame()">Filter by Game</div>
+		<div>Filter by:</div>
+		<div onclick="selectAllRaces()">All Races</div>
+		<div onclick="filterBySeries()">Series</div>
+		<div onclick="filterByGame()">Game</div>
 	</div>
 	<div id="filters"></div>
 	<div class="selector-container">
+		<div>Sort by:</div>
 		<div onclick="totalPoints()">Total Points</div>
 		<div onclick="pointsPerHour()">Points per Hour</div>
+		<div onclick="raceCount()">No. of races</div>
 	</div>
 	<div id="race-count-display"></div>
 	<table></table>
