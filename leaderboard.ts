@@ -4,10 +4,81 @@ let table = document.querySelector("table");
 const duration_multiplier = 1; // Points per hour
 const points_FL = 1;
 const point_system = [25, 22, 20, 18, 17, 16, 15, 14, 13, 12, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+// const point_system = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1];
 const races = [
+	"./data\\20200905_australia_f1.json",
+	"./data\\20200919_britain_f1.json",
+	"./data\\20201003_canada_f1.json",
+	"./data\\20201016_daytona_gt3.json",
+	"./data\\20201017_belgium_f1.json",
+	"./data\\20201024_lemans_gt3.json",
+	"./data\\20201031_brazil_f1.json",
+	"./data\\20201113_nurburgring_gt3.json",
+	"./data\\20201114_bahrain_f1.json",
+	"./data\\20201128_austria_f1.json",
+	"./data\\20201211_1_silverstone_gt3.json",
+	"./data\\20201211_1_silverstone_gt4.json",
+	"./data\\20201211_2_silverstone_gt3.json",
+	"./data\\20201211_2_silverstone_gt4.json",
+	"./data\\20201212_netherlands_f1.json",
+	"./data\\20201219_1_donington_btcc.json",
+	"./data\\20201219_2_donington_btcc.json",
+	"./data\\20210109_italy_f1.json",
+	"./data\\20210116_1_nurburgring_gt3.json",
+	"./data\\20210116_1_nurburgring_gt4.json",
+	"./data\\20210116_2_nurburgring_gt3.json",
+	"./data\\20210116_2_nurburgring_gt4.json",
+	"./data\\20210123_spain_f1.json",
+	"./data\\20210130_1_snetterton_btcc.json",
+	"./data\\20210130_2_snetterton_btcc.json",
+	"./data\\20210213_1_monza_gt3.json",
+	"./data\\20210213_1_monza_gt4.json",
+	"./data\\20210213_2_monza_gt3.json",
+	"./data\\20210213_2_monza_gt4.json",
+	"./data\\20210227_1_thruxton_btcc.json",
+	"./data\\20210227_2_thruxton_btcc .json",
+	"./data\\20210313_spa_gt3.json",
+	"./data\\20210313_spa_gt4.json",
+	"./data\\20210327_1_oulton_park_btcc.json",
+	"./data\\20210327_2_oulton_park_btcc.json",
+	"./data\\20210410_daytona_dpi.json",
+	"./data\\20210410_daytona_gtlm.json",
+	"./data\\20210410_daytona_lmp1.json",
+	"./data\\20210417_bahrain_f1.json",
+	"./data\\20210424_1_brands_hatch_btcc.json",
+	"./data\\20210424_2_brands_hatch_btcc.json",
+	"./data\\20210501_italy_f1.json",
+	"./data\\20210508_1_laguna_seca_gt3.json",
+	"./data\\20210508_2_laguna_seca_gt3.json",
+	"./data\\20210515_canada_f1.json",
+	"./data\\20210529_singapore_f1.json",
+	"./data\\20210605_1_suzuka_gt3.json",
+	"./data\\20210605_2_suzuka_gt3.json",
+	"./data\\20210612_usa_f1.json",
+	"./data\\20210619_indy500_indy.json",
+	"./data\\20210710_nurbugring_gt3.json",
+	"./data\\20210717_britain_f1.json",
+	"./data\\20210724_1_kyalami_gt3.json",
+	"./data\\20210724_2_kyalami_gt3.json",
+	"./data\\20210814_bathurst_gt3.json",
+	"./data\\20210828_lemans_dpi.json",
+	"./data\\20210828_lemans_gt3.json",
+	"./data\\20210828_lemans_lmp1.json",
+	"./data\\20210924_donington_park_mx5.json",
+	"./data\\20210924_donington_park_praga.json",
+	"./data\\20211001_zandvoort_mx5.json",
+	"./data\\20211001_zandvoort_praga.json",
+	"./data\\20211008_silverstone_mx5.json",
+	"./data\\20211008_silverstone_praga.json",
+	"./data\\20211024_1_donington_park_gt4.json",
+	"./data\\20211024_2_donington_park_gt4.json",
 	"./data\\20211113_austria_f1.json",
-	"./data\\20211127_imola_f1.json",
+	"./data\\20211120_1_snetterton_gt4.json",
+	"./data\\20211120_2_snetterton_gt4.json",
+	"./data\\20211127_italy_f1.json",
 	"./data\\20211211_azerbaijan_f1.json",
+	"./data\\20211218_1_oulton_park_gt4.json",
+	"./data\\20211218_2_oulton_park_gt4.json",
 	"./data\\20220108_france_f1.json",
 	"./data\\20220122_monaco_f1.json",
 	"./data\\20220129_portugal_f1.json",
@@ -29,6 +100,8 @@ const races = [
 	"./data\\20220402_2_brands_hatch_gt3.json",
 	"./data\\20220403_road_america_indy.json",
 	"./data\\20220416_indy500_indy.json",
+	"./data\\20220423_1_hungary_gt3.json",
+	"./data\\20220423_2_hungary_gt3.json",
 ];
 const table_head = ["Pos", "Δ", "Driver", "Points"]; //, "Races", "FLs", "DNFs"];
 
@@ -57,7 +130,10 @@ class Driver {
 		this.delta_pos_css_class = "";
 	}
 	addResult(pos: number, duration: number) {
-		this.points += point_system[pos - 1] * duration * duration_multiplier;
+		// Give 1 point if the driver finished "outside of the points"
+		if (pos <= point_system.length) this.points += point_system[pos - 1] * duration * duration_multiplier;
+		else this.points += 1 * duration * duration_multiplier;
+
 		this.time_driven += duration;
 		this.participated_races++;
 	}
@@ -67,7 +143,7 @@ class Driver {
 	}
 	addFastestLap(duration: number) {
 		this.fastest_lap_count++;
-		this.points += points_FL * duration * duration_multiplier;
+		// this.points += points_FL * duration * duration_multiplier;
 	}
 	updatePosition(pos: number) {
 		if (this.position !== 0) {
@@ -112,26 +188,20 @@ function selectAllRaces() {
 }
 
 function selectNoSeries() {
-	console.log("no series");
 	allowed_series = [];
 	// Clear checkboxes
 	series.forEach((s) => {
-		console.log("Looking for " + s.replaceAll(" ", "-"));
 		let checkbox = <HTMLInputElement>document.getElementById(s.replaceAll(" ", "-"));
-		console.log(checkbox);
 		checkbox.checked = false;
 	});
 	main();
 }
 
 function selectNoGames() {
-	console.log("no games");
 	allowed_games = [];
 	// Clear checkboxes
 	games.forEach((g) => {
-		console.log("Looking for " + g.replaceAll(" ", "-"));
 		let checkbox = <HTMLInputElement>document.getElementById(g.replaceAll(" ", "-"));
-		console.log(checkbox);
 		checkbox.checked = false;
 	});
 	main();
@@ -246,7 +316,7 @@ function generateTable() {
 		let row = table.insertRow();
 		row.classList.add("table-row");
 		row.onclick = function () {
-			console.log(d.name);
+			console.log(d.name + " has " + d.points + " points");
 		};
 		const data = [d.position.toString(), d.delta_pos_str, d.name, d.points.toFixed(1)];
 		// 	,
@@ -323,7 +393,7 @@ async function main(callback?: () => void) {
 
 	// Generate HTML
 	let race_count_display = document.getElementById("race-count-display");
-	if (race_count_display) race_count_display.innerHTML = race_count + " total races";
+	if (race_count_display) race_count_display.innerHTML = drivers.length + " drivers and " + race_count + " races";
 	generateTable();
 	if (callback) callback();
 }
