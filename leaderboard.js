@@ -5,104 +5,7 @@ const duration_multiplier = 1; // Points per hour
 const points_FL = 1;
 const point_system = [25, 22, 20, 18, 17, 16, 15, 14, 13, 12, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 // const point_system = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1];
-const races = [
-    "./data\\20200905_australia_f1.json",
-    "./data\\20200919_britain_f1.json",
-    "./data\\20201003_canada_f1.json",
-    "./data\\20201016_daytona_gt3.json",
-    "./data\\20201017_belgium_f1.json",
-    "./data\\20201024_lemans_gt3.json",
-    "./data\\20201031_brazil_f1.json",
-    "./data\\20201113_nurburgring_gt3.json",
-    "./data\\20201114_bahrain_f1.json",
-    "./data\\20201128_austria_f1.json",
-    "./data\\20201211_1_silverstone_gt3.json",
-    "./data\\20201211_1_silverstone_gt4.json",
-    "./data\\20201211_2_silverstone_gt3.json",
-    "./data\\20201211_2_silverstone_gt4.json",
-    "./data\\20201212_netherlands_f1.json",
-    "./data\\20201219_1_donington_btcc.json",
-    "./data\\20201219_2_donington_btcc.json",
-    "./data\\20210109_italy_f1.json",
-    "./data\\20210116_1_nurburgring_gt3.json",
-    "./data\\20210116_1_nurburgring_gt4.json",
-    "./data\\20210116_2_nurburgring_gt3.json",
-    "./data\\20210116_2_nurburgring_gt4.json",
-    "./data\\20210123_spain_f1.json",
-    "./data\\20210130_1_snetterton_btcc.json",
-    "./data\\20210130_2_snetterton_btcc.json",
-    "./data\\20210213_1_monza_gt3.json",
-    "./data\\20210213_1_monza_gt4.json",
-    "./data\\20210213_2_monza_gt3.json",
-    "./data\\20210213_2_monza_gt4.json",
-    "./data\\20210227_1_thruxton_btcc.json",
-    "./data\\20210227_2_thruxton_btcc .json",
-    "./data\\20210313_spa_gt3.json",
-    "./data\\20210313_spa_gt4.json",
-    "./data\\20210327_1_oulton_park_btcc.json",
-    "./data\\20210327_2_oulton_park_btcc.json",
-    "./data\\20210410_daytona_dpi.json",
-    "./data\\20210410_daytona_gtlm.json",
-    "./data\\20210410_daytona_lmp1.json",
-    "./data\\20210417_bahrain_f1.json",
-    "./data\\20210424_1_brands_hatch_btcc.json",
-    "./data\\20210424_2_brands_hatch_btcc.json",
-    "./data\\20210501_italy_f1.json",
-    "./data\\20210508_1_laguna_seca_gt3.json",
-    "./data\\20210508_2_laguna_seca_gt3.json",
-    "./data\\20210515_canada_f1.json",
-    "./data\\20210529_singapore_f1.json",
-    "./data\\20210605_1_suzuka_gt3.json",
-    "./data\\20210605_2_suzuka_gt3.json",
-    "./data\\20210612_usa_f1.json",
-    "./data\\20210619_indy500_indy.json",
-    "./data\\20210710_nurbugring_gt3.json",
-    "./data\\20210717_britain_f1.json",
-    "./data\\20210724_1_kyalami_gt3.json",
-    "./data\\20210724_2_kyalami_gt3.json",
-    "./data\\20210814_bathurst_gt3.json",
-    "./data\\20210828_lemans_dpi.json",
-    "./data\\20210828_lemans_gt3.json",
-    "./data\\20210828_lemans_lmp1.json",
-    "./data\\20210924_donington_park_mx5.json",
-    "./data\\20210924_donington_park_praga.json",
-    "./data\\20211001_zandvoort_mx5.json",
-    "./data\\20211001_zandvoort_praga.json",
-    "./data\\20211008_silverstone_mx5.json",
-    "./data\\20211008_silverstone_praga.json",
-    "./data\\20211024_1_donington_park_gt4.json",
-    "./data\\20211024_2_donington_park_gt4.json",
-    "./data\\20211113_austria_f1.json",
-    "./data\\20211120_1_snetterton_gt4.json",
-    "./data\\20211120_2_snetterton_gt4.json",
-    "./data\\20211127_italy_f1.json",
-    "./data\\20211211_azerbaijan_f1.json",
-    "./data\\20211218_1_oulton_park_gt4.json",
-    "./data\\20211218_2_oulton_park_gt4.json",
-    "./data\\20220108_france_f1.json",
-    "./data\\20220122_monaco_f1.json",
-    "./data\\20220129_portugal_f1.json",
-    "./data\\20220130_mid_ohio_indy.json",
-    "./data\\20220205_daytona_dpi.json",
-    "./data\\20220205_daytona_gtlm.json",
-    "./data\\20220205_daytona_lmp1.json",
-    "./data\\20220212_japan_f1.json",
-    "./data\\20220213_iowa_indy.json",
-    "./data\\20220219_zolder_gt3.json",
-    "./data\\20220226_hungary_f1.json",
-    "./data\\20220227_long_beach_indy.json",
-    "./data\\20220312_saudi_arabia_f1.json",
-    "./data\\20220313_wwt_raceway_indy.json",
-    "./data\\20220319_1_barcelona_gt3.json",
-    "./data\\20220319_2_barcelona_gt3.json",
-    "./data\\20220326_belgium_f1.json",
-    "./data\\20220402_1_brands_hatch_gt3.json",
-    "./data\\20220402_2_brands_hatch_gt3.json",
-    "./data\\20220403_road_america_indy.json",
-    "./data\\20220416_indy500_indy.json",
-    "./data\\20220423_1_hungary_gt3.json",
-    "./data\\20220423_2_hungary_gt3.json",
-];
+const races_file = './data\\data.json';
 class Driver {
     constructor(name) {
         this.name = name;
@@ -362,11 +265,11 @@ async function fetchJson(race) {
 async function main(callback) {
     let race_count = 0;
     drivers = [];
+    // Extract data from json
+    let all_data = await fetchJson(races_file);
     // For each race
-    for (let i = 0; i < races.length; i++) {
-        const race = races[i];
-        // Extract data from json
-        let data = await fetchJson(race);
+    for (let i = 0; i < all_data.race.length; i++) {
+        const data = all_data.race[i];
         if (!has_extracted_data) {
             if (games.indexOf(data.game) == -1)
                 games.push(data.game);
@@ -374,7 +277,6 @@ async function main(callback) {
                 series.push(data.series);
         }
         if (allowed_games.length != 0 && allowed_series.length != 0 && allowed_games.includes(data.game) && allowed_series.includes(data.series)) {
-            // console.log("inside");
             // For each driver
             for (let j = 0; j < data.drivers.length; j++) {
                 const d = data.drivers[j];

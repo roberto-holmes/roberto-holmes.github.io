@@ -14,35 +14,41 @@ def createJson():
     old_files = glob(output_dir + "/*.json")
     for f in old_files:
         os.remove(f)
+    output_object = {}
+    output_object["race"] = []
     for file in input_files:
         with open(file, newline="") as f:
             reader = csv.reader(f)
 
-            output_object = {}
+            race_object = {}
             drivers = []
             for i, row in enumerate(reader):
                 if i == 0:
-                    output_object["track"] = row[0]
-                    output_object["event"] = row[1]
-                    output_object["duration"] = row[2]
-                    output_object["date"] = file[len(input_dir) : len(input_dir) + 8]
-                    output_object["game"] = row[3]
-                    output_object["series"] = row[4]
+                    race_object["track"] = row[0]
+                    race_object["event"] = row[1]
+                    race_object["duration"] = row[2]
+                    race_object["date"] = file[len(input_dir) : len(input_dir) + 8]
+                    race_object["game"] = row[3]
+                    race_object["series"] = row[4]
                 elif i == 1:
-                    output_object["fastest_lap"] = []
+                    race_object["fastest_lap"] = []
                     for element in row:
                         if element != "":
-                            output_object["fastest_lap"].append(element)
+                            race_object["fastest_lap"].append(element)
 
                 else:
                     drivers.append({"name": row[1], "pos": row[0]})
 
-            output_object["drivers"] = drivers
+            race_object["drivers"] = drivers
 
-            # Write all the data to JSON files with the same name as the CSVs
-            with open(output_dir + file[file.find("\\") : -4] + ".json", "w") as output:
-                output.write(json.dumps(output_object))
+            # Add race data to the array of all races
+            output_object["race"].append(race_object)
 
+    # Create or overwrite a JSON file to store all race data
+    with open(output_dir + "/data.json", "w") as output:
+        output.write(json.dumps(output_object))
+
+    # Print path to output file to copy into the ts file
     output_files = glob(output_dir + "/*.json")
     print(output_files)
 
