@@ -5,7 +5,7 @@ const duration_multiplier = 1; // Points per hour
 const points_FL = 1;
 const point_system = [25, 22, 20, 18, 17, 16, 15, 14, 13, 12, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 // const point_system = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1];
-const races_file = './data\\data.json';
+const races_file = "./data\\data.json";
 
 class Driver {
 	name: string;
@@ -276,7 +276,7 @@ async function main(callback?: () => void) {
 
 	// Extract data from json
 	let all_data = await fetchJson(races_file);
-		
+
 	// For each race
 	for (let i = 0; i < all_data.race.length; i++) {
 		const data = all_data.race[i];
