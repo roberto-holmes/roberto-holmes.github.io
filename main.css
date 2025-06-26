@@ -1,0 +1,135 @@
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&family=Roboto:wght@500;700&display=swap");
+
+:root {
+	--color-primary: #222222;
+	--color-secondary: #e7e7e7;
+	--duration: 0.5s;
+	--nav-duration: calc(var(--duration) / 2);
+	--ease: cubic-bezier(0.215, 0.61, 0.355, 1);
+	--space: 1rem;
+	--font-special: "Roboto", sans-serif;
+	--font-primary: "Atkinson Hyperlegible", sans-serif;
+	--font-heading: "Atkinson Hyperlegible", sans-serif;
+	--font-size: 1.125rem;
+	--line-height: 1.6;
+}
+
+body {
+	margin: 0;
+	font-family: var(--font-primary);
+	font-size: var(--font-size);
+	line-height: var(--line-height);
+	overflow-x: hidden;
+}
+
+h1 {
+	text-align: center;
+}
+
+.navigation {
+	position: fixed;
+	display: flex;
+}
+
+#navbar {
+	width: 100vw;
+}
+
+#name {
+	position: sticky;
+}
+
+#cover {
+	height: 100vh;
+
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-color: rgb(30, 32, 32);
+
+	h1 {
+		height: 100vh;
+		margin-top: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: whitesmoke;
+	}
+
+	canvas {
+		position: absolute;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background-color: black;
+		display: block;
+	}
+}
+
+#projects {
+	height: 100vh;
+
+	.container {
+		display: grid;
+		padding: 0 10%;
+		grid-template-columns: 10em auto 10em;
+		grid-template-rows: 10em 10em 10em 10em;
+		grid-template-areas:
+			"a-icon a-flavour a-flavour"
+			/* ". . ." */
+			"b-flavour b-flavour b-icon"
+			"c-icon c-flavour c-flavour"
+			"d-flavour d-flavour d-icon";
+
+		.icon {
+			width: 100%;
+			/* background-color: rgb(249, 255, 163); */
+		}
+		.flavour {
+			position: relative;
+			width: 100%;
+			height: 100%;
+			background-color: rgb(172, 232, 232);
+		}
+		.icon-a {
+			grid-area: a-icon;
+		}
+		.flavour-a {
+			grid-area: a-flavour;
+		}
+		.icon-b {
+			grid-area: b-icon;
+		}
+		.flavour-b {
+			grid-area: b-flavour;
+		}
+		.icon-c {
+			grid-area: c-icon;
+		}
+		.flavour-c {
+			grid-area: c-flavour;
+		}
+		.icon-d {
+			grid-area: d-icon;
+		}
+		.flavour-d {
+			grid-area: d-flavour;
+		}
+
+		.footer {
+			position: absolute;
+			text-align: right;
+			bottom: 0;
+			right: 1em;
+			margin: 1em;
+		}
+
+		p {
+			padding-left: 1em;
+		}
+	}
+}
+
+#about {
+	height: 100vh;
+}

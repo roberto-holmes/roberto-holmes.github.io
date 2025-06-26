@@ -1,1 +1,69 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="initial-scale=1.0" />
+
+		<link rel="stylesheet" href="main.css" />
+		<script type="module" src="bg/bg.js"></script>
+
+		<!-- <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+		<link rel="manifest" href="/favicon/site.webmanifest" /> -->
+
+		<title>Roberto Holmes</title>
+	</head>
+
+	<body>
+		<div id="navbar">
+			<nav class="navigation" style="left: 1em">
+				<a href="index.html">Projects</a>
+			</nav>
+
+			<nav class="navigation" style="right: 1em">
+				<a href="index.html">About</a>
+			</nav>
+		</div>
+		<div id="cover">
+			<div id="bg"></div>
+			<h1 id="name">Roberto<br />Holmes</h1>
+		</div>
+		<div id="projects">
+			<h1>Projects</h1>
+			<div class="container">
+				<div class="icon-a icon">Roberto<br />Holmes</div>
+				<div class="flavour-a flavour">
+					<p>A website</p>
+					<p class="footer">Last updated: never</p>
+				</div>
+				<div class="icon-b icon">bloom</div>
+				<div class="flavour-b flavour">
+					<p>An engine</p>
+					<p class="footer">Last updated: never</p>
+				</div>
+				<a href="https://adler.robertoholm.es/"><img class="icon-c icon" src="icons/alex-adler.svg" /></a>
+				<div class="flavour-c flavour">
+					<p>Another website</p>
+					<p class="footer">Last updated: never</p>
+				</div>
+				<div class="icon-d icon">Capstan</div>
+				<div class="flavour-d flavour">
+					<p>A peripheral</p>
+					<p class="footer">Last updated: never</p>
+				</div>
+			</div>
+		</div>
+		<!-- <div id="about">
+			<h2>About</h2>
+		</div> -->
+	</body>
+	<script type="module">
+		import init from "./bg/bg_rs.js";
+		window.onload = function () {
+			init().then(() => {
+				console.log("WASM Loaded");
+			});
+		};
+	</script>
+</html>
