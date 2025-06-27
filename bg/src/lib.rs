@@ -8,7 +8,7 @@ use winit::{
     window::{Window, WindowBuilder},
 };
 
-use wgpu::{Limits, util::DeviceExt};
+use wgpu::Limits;
 
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
@@ -19,80 +19,32 @@ const LIMITS: Limits = wgpu::Limits::downlevel_webgl2_defaults();
 const LIMITS: Limits = wgpu::Limits::downlevel_defaults();
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, bytemuck::Pod, bytemuck::Zeroable)]
-struct Vertex {
-    position: [f32; 3],
-    color: [f32; 3],
+#[derive(Debug, Copy, Clone, bytemuck::Pod, bytemuck::Zeroable)]
+struct Uniforms {
+    frame_num: u32,
+    width: u32,
+    height: u32,
+    _padding: u32,
 }
 
-impl Vertex {
-    fn desc() -> wgpu::VertexBufferLayout<'static> {
-        wgpu::VertexBufferLayout {
-            array_stride: std::mem::size_of::<Vertex>() as wgpu::BufferAddress,
-            step_mode: wgpu::VertexStepMode::Vertex,
-            attributes: &[
-                wgpu::VertexAttribute {
-                    offset: 0,
-                    shader_location: 0,
-                    format: wgpu::VertexFormat::Float32x3,
-                },
-                wgpu::VertexAttribute {
-                    offset: std::mem::size_of::<[f32; 3]>() as wgpu::BufferAddress,
-                    shader_location: 1,
-                    format: wgpu::VertexFormat::Float32x3,
-                },
-            ],
+impl Uniforms {
+    fn new() -> Self {
+        Self {
+            frame_num: 0,
+            width: 0,
+            height: 0,
+            _padding: 0,
         }
     }
+    fn tick(&mut self) {
+        // TODO: figure out overflow (use u64 instead?)
+        self.frame_num += 1;
+    }
+    fn update(&mut self, width: u32, height: u32) {
+        self.width = width;
+        self.height = height;
+    }
 }
-
-#[rustfmt::skip]
-const VERTICES_RAW: &[Vertex] = &[
-Vertex { position: [0.0, 0.0, 0.0], 	color: [0.1, 0.0, 0.1] }, // 0
-Vertex { position: [0.5, 0.0, 0.0], 	color: [0.1, 0.0, 0.1] }, // 1
-Vertex { position: [0.25, 0.433, 0.0],	color: [0.1, 0.0, 0.1] }, // 2
-
-Vertex { position: [0.0, 0.0, 0.0], 	color: [0.5, 0.0, 0.5] }, // 0
-Vertex { position: [0.25, 0.433, 0.0],	color: [0.5, 0.0, 0.5] }, // 2
-Vertex { position: [-0.25, 0.433, 0.0],	color: [0.5, 0.0, 0.5] }, // 3
-
-Vertex { position: [0.0, 0.0, 0.0], 	color: [0.5, 0.0, 0.5] }, // 0
-Vertex { position: [-0.25, 0.433, 0.0],	color: [0.5, 0.0, 0.5] }, // 3
-Vertex { position: [-0.5, 0.0, 0.0],	color: [0.5, 0.0, 0.5] }, // 4
-
-Vertex { position: [0.0, 0.0, 0.0], 	color: [1.0, 0.0, 1.0] }, // 0
-Vertex { position: [-0.5, 0.0, 0.0],	color: [1.0, 0.0, 1.0] }, // 4
-Vertex { position: [-0.25, -0.433, 0.0],color: [1.0, 0.0, 1.0] }, // 5
-
-Vertex { position: [0.0, 0.0, 0.0], 	color: [1.0, 0.0, 1.0] }, // 0
-Vertex { position: [-0.25, -0.433, 0.0],color: [1.0, 0.0, 1.0] }, // 5
-Vertex { position: [0.25, -0.433, 0.0],	color: [1.0, 0.0, 1.0] }, // 6
-
-Vertex { position: [0.0, 0.0, 0.0], 	color: [0.1, 0.0, 0.1] }, // 0
-Vertex { position: [0.25, -0.433, 0.0],	color: [0.1, 0.0, 0.1] }, // 6
-Vertex { position: [0.5, 0.0, 0.0], 	color: [0.1, 0.0, 0.1] }, // 1
-];
-
-#[rustfmt::skip]
-const VERTICES: &[Vertex] = &[
-    Vertex { position: [0.0, 0.0, 0.0], 	color: [0.5, 1.0, 0.5] }, 
-	Vertex { position: [0.5, 0.0, 0.0], 	color: [0.5, 0.0, 0.5] }, 
-    Vertex { position: [0.25, 0.433, 0.0],	color: [0.5, 0.0, 0.5] }, 
-    Vertex { position: [-0.25, 0.433, 0.0],	color: [0.5, 0.0, 0.5] }, 
-    Vertex { position: [-0.5, 0.0, 0.0],	color: [1.0, 0.0, 0.5] }, 
-    Vertex { position: [-0.25, -0.433, 0.0],color: [0.5, 0.0, 0.5] }, 
-    Vertex { position: [0.25, -0.433, 0.0],	color: [0.5, 0.0, 0.5] }, 
-    ];
-
-#[rustfmt::skip]
-const INDICES: &[u16] = &[
-    0, 1, 2,
-    0, 2, 3,
-    0, 3, 4,
-    0, 4, 5,
-    0, 5, 6,
-    0, 6, 1,
-];
 
 struct State<'a> {
     surface: wgpu::Surface<'a>,
@@ -101,11 +53,9 @@ struct State<'a> {
     config: wgpu::SurfaceConfiguration,
     size: winit::dpi::PhysicalSize<u32>,
     render_pipeline: wgpu::RenderPipeline,
-    vertex_buffer: wgpu::Buffer,
-    raw_vertex_buffer: wgpu::Buffer,
-    num_vertices: u32,
-    index_buffer: wgpu::Buffer,
-    num_indices: u32,
+    uniforms: Uniforms,
+    uniforms_buffer: wgpu::Buffer,
+    bind_group: wgpu::BindGroup,
     // The window must be declared after the surface so
     // it gets dropped after it as the surface contains
     // unsafe references to the window's resources.
@@ -172,32 +122,47 @@ impl<'a> State<'a> {
             view_formats: vec![],
         };
 
-        let vertex_buffer = device.create_buffer_init(&wgpu::util::BufferInitDescriptor {
-            label: Some("Vertex Buffer"),
-            contents: bytemuck::cast_slice(VERTICES),
-            usage: wgpu::BufferUsages::VERTEX,
+        let uniforms = Uniforms::new();
+        let uniforms_buffer = device.create_buffer(&wgpu::BufferDescriptor {
+            label: Some("Uniforms"),
+            size: std::mem::size_of::<Uniforms>() as u64,
+            usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST,
+            mapped_at_creation: false,
         });
 
-        let raw_vertex_buffer = device.create_buffer_init(&wgpu::util::BufferInitDescriptor {
-            label: Some("Vertex Buffer"),
-            contents: bytemuck::cast_slice(VERTICES_RAW),
-            usage: wgpu::BufferUsages::VERTEX,
+        let bind_group_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
+            entries: &[wgpu::BindGroupLayoutEntry {
+                binding: 0,
+                visibility: wgpu::ShaderStages::FRAGMENT,
+                ty: wgpu::BindingType::Buffer {
+                    ty: wgpu::BufferBindingType::Uniform,
+                    has_dynamic_offset: false,
+                    min_binding_size: None,
+                },
+                count: None,
+            }],
+            label: Some("bind_group_layout"),
         });
-        let num_vertices = VERTICES_RAW.len() as u32;
 
-        let index_buffer = device.create_buffer_init(&wgpu::util::BufferInitDescriptor {
-            label: Some("Index Buffer"),
-            contents: bytemuck::cast_slice(INDICES),
-            usage: wgpu::BufferUsages::INDEX,
+        let bind_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
+            label: None,
+            layout: &bind_group_layout,
+            entries: &[wgpu::BindGroupEntry {
+                binding: 0,
+                resource: wgpu::BindingResource::Buffer(wgpu::BufferBinding {
+                    buffer: &uniforms_buffer,
+                    offset: 0,
+                    size: None,
+                }),
+            }],
         });
-        let num_indices = INDICES.len() as u32;
 
         let shader = device.create_shader_module(wgpu::include_wgsl!("shader.wgsl"));
 
         let render_pipeline_layout =
             device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
                 label: Some("Render Pipeline Layout"),
-                bind_group_layouts: &[],
+                bind_group_layouts: &[&bind_group_layout],
                 push_constant_ranges: &[],
             });
 
@@ -207,7 +172,7 @@ impl<'a> State<'a> {
             vertex: wgpu::VertexState {
                 module: &shader,
                 entry_point: Some("vs_main"),
-                buffers: &[Vertex::desc()],
+                buffers: &[],
                 compilation_options: wgpu::PipelineCompilationOptions::default(),
             },
             fragment: Some(wgpu::FragmentState {
@@ -246,13 +211,11 @@ impl<'a> State<'a> {
             config,
             size,
             render_pipeline,
-            vertex_buffer,
-            raw_vertex_buffer,
-            num_vertices,
-            index_buffer,
-            num_indices,
             window,
             clear_colour: wgpu::Color::BLACK,
+            uniforms,
+            uniforms_buffer,
+            bind_group,
         }
     }
 
@@ -266,6 +229,7 @@ impl<'a> State<'a> {
             self.config.width = new_size.width;
             self.config.height = new_size.height;
             self.surface.configure(&self.device, &self.config);
+            self.uniforms.update(new_size.width, new_size.height);
         }
     }
 
@@ -287,6 +251,14 @@ impl<'a> State<'a> {
     fn update(&mut self) {}
 
     fn render(&mut self) -> Result<(), wgpu::SurfaceError> {
+        // Update Uniforms
+        self.uniforms.tick();
+        self.queue.write_buffer(
+            &self.uniforms_buffer,
+            0,
+            bytemuck::cast_slice(&[self.uniforms]),
+        );
+
         let output = self.surface.get_current_texture()?;
         let view = output
             .texture
@@ -314,11 +286,11 @@ impl<'a> State<'a> {
                 timestamp_writes: None,
             });
 
+            render_pass.set_bind_group(0, &self.bind_group, &[]);
             render_pass.set_pipeline(&self.render_pipeline);
-            render_pass.set_vertex_buffer(0, self.vertex_buffer.slice(..));
 
-            render_pass.set_index_buffer(self.index_buffer.slice(..), wgpu::IndexFormat::Uint16);
-            render_pass.draw_indexed(0..self.num_indices, 0, 0..1);
+            // Provide vertices to cover the screen
+            render_pass.draw(0..6, 0..1);
         }
 
         self.queue.submit(iter::once(encoder.finish()));
@@ -333,7 +305,7 @@ pub async fn run() {
     cfg_if::cfg_if! {
         if #[cfg(target_arch = "wasm32")] {
             std::panic::set_hook(Box::new(console_error_panic_hook::hook));
-            console_log::init_with_level(log::Level::Warn).expect("Couldn't initialize logger");
+            console_log::init_with_level(log::Level::Info).expect("Couldn't initialize logger");
         } else {
             env_logger::init();
         }
@@ -356,10 +328,7 @@ pub async fn run() {
                 let factor = window.scale_factor();
                 let logical = LogicalSize { width, height };
                 let PhysicalSize { width, height }: PhysicalSize<u32> = logical.to_physical(factor);
-                let _ = window.request_inner_size(PhysicalSize::new(
-                    width.min(LIMITS.max_texture_dimension_2d),
-                    height.min(LIMITS.max_texture_dimension_2d),
-                ));
+                let _ = window.request_inner_size(PhysicalSize::new(width, height));
                 win.document()
             })
             .and_then(|doc| {
@@ -401,12 +370,18 @@ pub async fn run() {
                             }
                             WindowEvent::Resized(physical_size) => {
                                 log::info!("physical_size: {physical_size:?}");
-                                surface_configured = true;
-                                if physical_size.width <= LIMITS.max_texture_dimension_2d
-                                    && physical_size.width <= LIMITS.max_texture_dimension_2d
-                                {
-                                    state.resize(*physical_size);
+                                let mut new_size = *physical_size;
+                                // Check if we are trying to make a window larger than the current Limits allows
+                                if new_size.width > LIMITS.max_texture_dimension_2d {
+                                    log::warn!("Trying to resize window width to be larger than the maximum texture size");
+                                    new_size.width = LIMITS.max_texture_dimension_2d;
                                 }
+                                if new_size.height > LIMITS.max_texture_dimension_2d {
+                                    log::warn!("Trying to resize window height to be larger than the maximum texture size");
+                                    new_size.height = LIMITS.max_texture_dimension_2d;
+                                }
+                                surface_configured = true;
+                                state.resize(new_size);
                             }
                             WindowEvent::RedrawRequested => {
                                 // This tells winit that we want another frame after this one
