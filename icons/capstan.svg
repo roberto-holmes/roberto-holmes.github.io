@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="200.00063mm"
+   height="200.00171mm"
+   viewBox="0 0 200.00063 200.00171"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="Logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showguides="true"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="496.03541"
+     inkscape:cy="402.34376"
+     inkscape:window-width="2558"
+     inkscape:window-height="1360"
+     inkscape:window-x="-7"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer3">
+    <sodipodi:guide
+       position="100.00083,196.99784"
+       orientation="-1,0"
+       id="guide3"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,134,229)" />
+    <sodipodi:guide
+       position="100.00083,196.99784"
+       orientation="0,1"
+       id="guide4"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,134,229)" />
+    <sodipodi:guide
+       position="100.00083,196.99784"
+       orientation="0.70710678,0.70710678"
+       id="guide5"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,134,229)" />
+    <sodipodi:guide
+       position="100.00083,196.99784"
+       orientation="-0.70710678,0.70710678"
+       id="guide6"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,134,229)" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="BG">
+    <circle
+       style="fill:#222222;stroke-width:0.264583;fill-opacity:1"
+       id="path12"
+       cx="100"
+       cy="100"
+       r="100" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Spokes"
+     transform="translate(8.3473e-4,0.00216473)">
+    <path
+       id="rect3"
+       style="fill:#afe9c6;stroke-width:0.395056"
+       d="m 96.989175,-0.00216473 h 6.004245 L 107.99679,99.997818 H 92.003909 Z"
+       sodipodi:nodetypes="ccccc" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect3"
+       id="use6"
+       transform="rotate(90,100.00354,99.99408)" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect3"
+       id="use7"
+       transform="rotate(-90,100.00726,100.00593)" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect3"
+       id="use8"
+       transform="matrix(1,0,0,-1,-0.011419,199.99738)" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect3"
+       id="use9"
+       transform="matrix(0.6413667,0.6413667,-0.6413667,0.6413667,106.53239,-34.82287)" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect3"
+       id="use10"
+       transform="matrix(0.64305235,-0.64305235,0.64305235,0.64305235,-35.12525,93.475737)" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect3"
+       id="use11"
+       transform="matrix(-0.64473799,-0.64473799,0.64473799,-0.64473799,93.440152,235.52251)" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect3"
+       id="use12"
+       transform="matrix(-0.64306279,0.64306279,-0.64306279,-0.64306279,235.17503,106.54633)" />
+  </g>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(8.3473e-4,0.00216473)">
+    <circle
+       style="fill:#16502d;stroke-width:0.264583"
+       id="path1"
+       cx="99.999001"
+       cy="99.999001"
+       r="33.333" />
+  </g>
+</svg>
