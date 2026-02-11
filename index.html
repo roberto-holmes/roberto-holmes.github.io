@@ -5,13 +5,14 @@
 		<meta name="viewport" content="initial-scale=1.0" />
 
 		<link rel="stylesheet" href="main.css" />
-		<script type="module" src="bg/bg.js"></script>
 
 		<link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
 		<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 		<link rel="shortcut icon" href="/favicon/favicon.ico" />
 		<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
 		<link rel="manifest" href="/favicon/site.webmanifest" />
+
+		<script type="module" src="wgsl.js"></script>
 
 		<title>Roberto Holmes</title>
 	</head>
@@ -27,7 +28,7 @@
 			</nav>
 		</div> -->
 		<div id="cover">
-			<div id="bg"></div>
+			<canvas id="bg"></canvas>
 			<div id="title">
 				<div class="name upper"><span class="monogram" id="R">R</span><span class="name_body">oberto</span></div>
 				<div class="name lower"><span class="monogram" id="H">H</span><span class="name_body">olmes</span></div>
@@ -66,12 +67,4 @@
 			<h2>About</h2>
 		</div> -->
 	</body>
-	<script type="module">
-		import init from "./bg/bg_rs.js";
-		window.onload = function () {
-			init().then(() => {
-				console.log("WASM Loaded");
-			});
-		};
-	</script>
 </html>
